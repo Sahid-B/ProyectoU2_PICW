@@ -70,7 +70,7 @@ El enrutador (`src/App.jsx`) utiliza `react-router-dom` para gestionar la navega
 | `/equipo` | ✅ Activa | Información del equipo de desarrollo y roles |
 | `/bibliografia` | ✅ Activa | Lista de libros y páginas web consultadas |
 | `/noticias` | ✅ Activa | Artículos sobre métodos numéricos y desarrollo web |
-| `/calculadora` | 🔜 Próximamente | Módulo interactivo de cálculo de Simpson 1/3 |
+| `/calculadora` | ✅ Activa | Módulo interactivo de cálculo de Simpson 1/3 |
 | `/contactos` | 🔜 Próximamente | Formulario para enviar mensajes |
 | `/estadisticas` | 🔜 Próximamente | Métricas y gráficas de tráfico del sitio |
 
@@ -101,20 +101,21 @@ El servidor local se abrirá en `http://localhost:5173/` por defecto.
 
 ---
 
-## 🧩 Páginas implementadas (Ronda 2)
+## 🧩 Fases del Desarrollo
 
-### Equipo (`/equipo`)
-- Lista de integrantes del equipo con su rol.
-- Renderizado con `map()` sobre un arreglo local.
-- `useEffect` registra la visita al cargar la página.
+### 🟢 Ronda 1 - Sahid & Jhonny
+**Sahid (Base y Arquitectura):**
+- Creación de proyecto Vite + React.
+- Configuración de dependencias (react-router-dom, mysql2).
+- Base de datos MySQL (`database.sql`) y capa de servicios mockeada (`db.js`).
+- Páginas de Inicio (mostrando datos falsos/BDD), Navbar y Footer global.
 
-### Bibliografía (`/bibliografia`)
-- Lista de libros de referencia y páginas web consultadas.
-- Dos secciones en grid con `map()` sobre dos arreglos separados.
-- `useEffect` registra la visita al cargar la página.
+**Jhonny (Páginas Informativas):**
+- **Equipo (`/equipo`)**: Lista de integrantes del equipo con roles (renderizado con `map`).
+- **Bibliografía (`/bibliografia`)**: Referencias de libros y páginas web.
+- **Noticias (`/noticias`)**: Obtención de artículos desde el servicio simulado `newsApi.js`.
 
-### Noticias (`/noticias`)
-- Noticias obtenidas desde `src/services/newsApi.js` (datos mock locales).
-- `useState` + `useEffect` para cargar y renderizar con `map()`.
-- Muestra título, descripción y enlace de cada noticia.
-- `useEffect` registra la visita al cargar la página.
+### 🟢 Ronda 2 - Sahid (Cálculo de Simpson 1/3)
+- **Lógica Matemática (`simpson.js`)**: Función pura que procesa la expresión matemática string (usando JS), valida que `n` sea par, evalúa `f(x)` y aplica la fórmula de Simpson 1/3.
+- **Formulario Interactivo (`SimpsonForm.jsx`)**: Componente que interactúa con el usuario, valida inputs numéricos y muestra resultados/errores. Carga las funciones predefinidas (o mockeadas) desde la base de datos.
+- **Página Calculadora (`/calculadora`)**: Vista principal que muestra la teoría del método, la fórmula oficial y contiene el formulario de cálculo.
