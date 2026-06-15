@@ -1,0 +1,1 @@
+export { Bibliografia } from './bibliografia';
