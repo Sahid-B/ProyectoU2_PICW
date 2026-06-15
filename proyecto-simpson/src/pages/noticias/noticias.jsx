@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { registrarVisita } from '../../services/db';
 import { obtenerNoticiasMatematicas } from '../../services/newsApi';
+import styles from './noticias.module.css';
 
 export const Noticias = () => {
   const [noticias, setNoticias] = useState([]);
@@ -21,14 +22,14 @@ export const Noticias = () => {
 
       <ul>
         {noticias.map((noticia) => (
-          <li key={noticia.id} className="card" style={{ marginBottom: '1rem' }}>
-            <h2>{noticia.titulo}</h2>
+          <li key={noticia.id} className={`card ${styles.newsCard}`} style={{ marginBottom: '1rem' }}>
+            <h2 className={styles.newsTitle}>{noticia.titulo}</h2>
             <p>{noticia.descripcion}</p>
             <a
               href={noticia.enlace}
               target="_blank"
               rel="noopener noreferrer"
-              style={{ color: 'var(--primary)', textDecoration: 'none', fontWeight: '600' }}
+              className={styles.newsLink}
             >
               Leer más →
             </a>

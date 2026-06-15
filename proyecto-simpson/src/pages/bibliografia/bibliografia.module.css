@@ -1,0 +1,24 @@
+.biblioItem {
+  transition: all 0.3s ease;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  border-left: 3px solid transparent;
+}
+
+.biblioItem:hover {
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateX(5px);
+  border-left: 3px solid var(--accent);
+}
+
+.biblioLink {
+  color: var(--primary);
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.3s ease;
+}
+
+.biblioLink:hover {
+  color: var(--accent);
+  text-decoration: underline;
+}

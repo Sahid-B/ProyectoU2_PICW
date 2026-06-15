@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { registrarVisita } from '../../services/db';
+import styles from './equipo.module.css';
 
 const integrantes = [
   { id: 1, nombre: 'Jhonny Romero', rol: 'Desarrollo de las páginas Equipo, Bibliografía y Noticias' },
@@ -21,9 +22,9 @@ export const Equipo = () => {
 
       <div className="grid-2">
         {integrantes.map((integrante) => (
-          <div key={integrante.id} className="card">
+          <div key={integrante.id} className={`card ${styles.equipoCard}`}>
             <h2>{integrante.nombre}</h2>
-            <p>{integrante.rol}</p>
+            <p className={styles.rolText}>{integrante.rol}</p>
           </div>
         ))}
       </div>

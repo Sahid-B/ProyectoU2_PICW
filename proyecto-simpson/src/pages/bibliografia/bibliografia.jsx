@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { registrarVisita } from '../../services/db';
+import styles from './bibliografia.module.css';
 
 const libros = [
   {
@@ -66,7 +67,7 @@ export const Bibliografia = () => {
           <h2>📚 Libros</h2>
           <ul>
             {libros.map((libro) => (
-              <li key={libro.id}>
+              <li key={libro.id} className={styles.biblioItem}>
                 <strong>{libro.titulo}</strong>
                 <br />
                 {libro.autores} ({libro.anio}) — {libro.editorial}
@@ -79,12 +80,12 @@ export const Bibliografia = () => {
           <h2>🌐 Páginas Web</h2>
           <ul>
             {paginasWeb.map((pagina) => (
-              <li key={pagina.id}>
+              <li key={pagina.id} className={styles.biblioItem}>
                 <a
                   href={pagina.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  style={{ color: 'var(--primary)', textDecoration: 'none' }}
+                  className={styles.biblioLink}
                 >
                   {pagina.nombre}
                 </a>

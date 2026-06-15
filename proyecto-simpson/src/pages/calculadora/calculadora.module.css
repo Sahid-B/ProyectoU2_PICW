@@ -1,0 +1,46 @@
+.title {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.description {
+  text-align: center;
+  max-width: 800px;
+  margin: 0 auto 2rem;
+}
+
+.formulaBox {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px dashed rgba(255, 255, 255, 0.2);
+  padding: 1.5rem;
+  border-radius: 0.5rem;
+  text-align: center;
+  margin-bottom: 2.5rem;
+}
+
+.formulaBox h3 {
+  color: var(--text-main);
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.formula {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: var(--accent);
+  letter-spacing: 1px;
+  background: rgba(15, 23, 42, 0.5);
+  padding: 1rem;
+  border-radius: 0.5rem;
+  display: inline-block;
+  margin-bottom: 0.5rem;
+}
+
+.formulaDetails {
+  font-size: 0.95rem;
+  color: var(--text-muted);
+}
+
+.formWrapper {
+  margin-top: 1rem;
+}

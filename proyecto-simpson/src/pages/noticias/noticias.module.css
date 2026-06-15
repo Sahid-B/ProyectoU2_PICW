@@ -1,0 +1,31 @@
+.newsCard {
+  border-left: 4px solid var(--primary);
+  transition: all 0.3s ease;
+}
+
+.newsCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.4);
+}
+
+.newsTitle {
+  color: var(--text-main);
+  margin-bottom: 0.5rem;
+}
+
+.newsLink {
+  display: inline-block;
+  margin-top: 1rem;
+  padding: 0.5rem 1rem;
+  background: rgba(79, 70, 229, 0.1);
+  color: var(--primary) !important;
+  border-radius: 0.5rem;
+  text-decoration: none;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.newsLink:hover {
+  background: var(--primary);
+  color: white !important;
+}
