@@ -1,0 +1,55 @@
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+import { Navbar, Footer } from './components';
+import { Inicio } from './pages';
+import { registrarVisita } from './services/db';
+import './index.css';
+
+// Componente para registrar la visita al cargar la ruta (por si se entra directamente por URL)
+const RouteTracker = () => {
+  const location = useLocation();
+  
+  useEffect(() => {
+    let pagina = 'Desconocida';
+    switch (location.pathname) {
+      case '/': pagina = 'Inicio'; break;
+      case '/equipo': pagina = 'Equipo'; break;
+      case '/bibliografia': pagina = 'Bibliografia'; break;
+      case '/noticias': pagina = 'Noticias'; break;
+      case '/calculadora': pagina = 'Calculadora'; break;
+      case '/contactos': pagina = 'Contactos'; break;
+      case '/estadisticas': pagina = 'Estadisticas'; break;
+      default: break;
+    }
+    
+    registrarVisita(pagina).catch(() => {});
+  }, [location]);
+
+  return null;
+};
+
+function App() {
+  return (
+    <Router>
+      <RouteTracker />
+      <div className="app-container">
+        <Navbar />
+        <main className="main-content">
+          <Routes>
+            <Route path="/" element={<Inicio />} />
+            {/* Rutas futuras para Jhonny y Sahid Ronda 2 */}
+            <Route path="/equipo" element={<div className="container"><h2>Equipo (Próximamente)</h2></div>} />
+            <Route path="/bibliografia" element={<div className="container"><h2>Bibliografía (Próximamente)</h2></div>} />
+            <Route path="/noticias" element={<div className="container"><h2>Noticias (Próximamente)</h2></div>} />
+            <Route path="/calculadora" element={<div className="container"><h2>Calculadora (Próximamente)</h2></div>} />
+            <Route path="/contactos" element={<div className="container"><h2>Contactos (Próximamente)</h2></div>} />
+            <Route path="/estadisticas" element={<div className="container"><h2>Estadísticas (Próximamente)</h2></div>} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
+    </Router>
+  );
+}
+
+export default App;
