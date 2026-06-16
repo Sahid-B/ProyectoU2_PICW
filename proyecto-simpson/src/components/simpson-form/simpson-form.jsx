@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { obtenerFunciones, guardarCalculo, registrarVisita } from '../../../services/db';
-import { simpson13 } from '../../../services/simpson';
+import { obtenerFunciones, guardarCalculo, registrarVisita } from '../../services/db';
+import { simpson13 } from '../../services/simpson';
 import styles from './simpson-form.module.css';
 
 export const SimpsonForm = () => {

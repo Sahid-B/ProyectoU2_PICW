@@ -37,10 +37,15 @@ proyecto-simpson/
     │   ├── inicio/        # Página principal con datos y estadísticas
     │   ├── equipo/        # Información del equipo de desarrollo
     │   ├── bibliografia/  # Referencias teóricas y páginas web consultadas
-    │   └── noticias/      # Noticias y artículos sobre métodos numéricos
+    │   ├── noticias/      # Noticias y artículos sobre métodos numéricos
+    │   ├── calculadora/   # Módulo de cálculo Simpson 1/3
+    │   ├── contactos/     # Formulario de contacto con guardarContacto()
+    │   └── estadisticas/  # Panel de métricas: visitas, cálculos y funciones
     └── services/          # Capa de servicios y acceso a datos
         ├── db.js          # Datos mock en memoria (visitas, cálculos, contactos)
-        └── newsApi.js     # Servicio mock de noticias matemáticas (datos locales)
+        ├── newsApi.js     # Servicio mock de noticias matemáticas (datos locales)
+        ├── simpson.js     # Lógica pura del método numérico Simpson 1/3
+        └── simpson.test.js# Pruebas unitarias con Vitest (3 casos)
 ```
 
 ---
@@ -71,8 +76,8 @@ El enrutador (`src/App.jsx`) utiliza `react-router-dom` para gestionar la navega
 | `/bibliografia` | ✅ Activa | Lista de libros y páginas web consultadas |
 | `/noticias` | ✅ Activa | Artículos sobre métodos numéricos y desarrollo web |
 | `/calculadora` | ✅ Activa | Módulo interactivo de cálculo de Simpson 1/3 |
-| `/contactos` | 🔜 Próximamente | Formulario para enviar mensajes |
-| `/estadisticas` | 🔜 Próximamente | Métricas y gráficas de tráfico del sitio |
+| `/contactos` | ✅ Activa | Formulario para enviar mensajes con confirmación de éxito |
+| `/estadisticas` | ✅ Activa | Métricas de sesión: visitas, cálculos, promedio y funciones disponibles |
 
 ---
 
@@ -101,21 +106,17 @@ El servidor local se abrirá en `http://localhost:5173/` por defecto.
 
 ---
 
-## 🧩 Fases del Desarrollo
+## 👥 Equipo de Desarrollo
 
-### 🟢 Ronda 1 - Sahid & Jhonny
-**Sahid (Base y Arquitectura):**
-- Creación de proyecto Vite + React.
-- Configuración de dependencias (react-router-dom, mysql2).
-- Base de datos MySQL (`database.sql`) y capa de servicios mockeada (`db.js`).
-- Páginas de Inicio (mostrando datos falsos/BDD), Navbar y Footer global.
+**Sahid** — Arquitectura base, lógica de cálculo y formulario interactivo
+- Configuración del proyecto (Vite + React + react-router-dom).
+- Base de datos MySQL (`database.sql`) y capa mock en memoria (`db.js`).
+- Página de Inicio, Navbar, Footer y sistema de registro de visitas.
+- Lógica matemática pura del método Simpson 1/3 (`simpson.js`).
+- Componente `SimpsonForm` y página `/calculadora`.
 
-**Jhonny (Páginas Informativas):**
-- **Equipo (`/equipo`)**: Lista de integrantes del equipo con roles (renderizado con `map`).
-- **Bibliografía (`/bibliografia`)**: Referencias de libros y páginas web.
-- **Noticias (`/noticias`)**: Obtención de artículos desde el servicio simulado `newsApi.js`.
-
-### 🟢 Ronda 2 - Sahid (Cálculo de Simpson 1/3)
-- **Lógica Matemática (`simpson.js`)**: Función pura que procesa la expresión matemática string (usando JS), valida que `n` sea par, evalúa `f(x)` y aplica la fórmula de Simpson 1/3.
-- **Formulario Interactivo (`SimpsonForm.jsx`)**: Componente que interactúa con el usuario, valida inputs numéricos y muestra resultados/errores. Carga las funciones predefinidas (o mockeadas) desde la base de datos.
-- **Página Calculadora (`/calculadora`)**: Vista principal que muestra la teoría del método, la fórmula oficial y contiene el formulario de cálculo.
+**Jhonny** — Páginas informativas, contacto, estadísticas y pruebas unitarias
+- Páginas `/equipo`, `/bibliografia` y `/noticias`.
+- Página `/contactos`: formulario con validación, llamada a `guardarContacto()` y mensaje de éxito.
+- Página `/estadisticas`: total de visitas, últimos cálculos, promedio de resultados y funciones disponibles.
+- Pruebas unitarias con **Vitest** para `simpson13` (caso correcto, n impar y n no numérico).

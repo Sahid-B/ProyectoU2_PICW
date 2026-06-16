@@ -3,3 +3,5 @@ export { Equipo } from './equipo';
 export { Bibliografia } from './bibliografia';
 export { Noticias } from './noticias';
 export { Calculadora } from './calculadora';
+export { Contactos } from './contactos';
+export { Estadisticas } from './estadisticas';
