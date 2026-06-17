@@ -47,3 +47,11 @@ CREATE TABLE IF NOT EXISTS usuarios (
     correo VARCHAR(255) NOT NULL,
     numero VARCHAR(50) NOT NULL
 );
+
+CREATE TABLE IF NOT EXISTS usuarios (
+      id INT AUTO_INCREMENT PRIMARY KEY,
+      usuario VARCHAR(255) NOT NULL UNIQUE,
+      contrasena VARCHAR(255) NOT NULL,
+      nombre VARCHAR(255) NOT NULL,
+      correo VARCHAR(255) NOT NULL,
+      numero VARCHAR(50) NOT NULL);

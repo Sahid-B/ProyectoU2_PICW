@@ -80,18 +80,17 @@ const dbPlugin = () => {
             const [rows] = await pool.query('SELECT * FROM funciones');
             res.end(JSON.stringify(rows));
           }
-          else if (path === '/api/noticias' && req.method === 'GET') {
-            // Proxy para arXiv API (Science & Math API)
-            try {
-              const arxivRes = await fetch('http://export.arxiv.org/api/query?search_query=cat:math.NA&sortBy=submittedDate&sortOrder=descending&max_results=10');
-              const text = await arxivRes.text();
-              res.setHeader('Content-Type', 'application/xml');
-              res.end(text);
-            } catch (err) {
-              console.error("Error fetching arxiv:", err);
-              res.statusCode = 500;
-              res.end(JSON.stringify({ error: err.message }));
+          else if (path === '/api/funciones' && req.method === 'POST') {
+            const { expresion, descripcion } = await getJsonBody(req);
+            
+            // Verificar si la función ya existe para no tener duplicados
+            const [existing] = await pool.query('SELECT * FROM funciones WHERE expresion = ?', [expresion]);
+            if (existing.length > 0) {
+              return res.end(JSON.stringify({ success: true, message: 'La función ya existe' }));
             }
+
+            const [result] = await pool.query('INSERT INTO funciones (expresion, descripcion) VALUES (?, ?)', [expresion, descripcion || 'Función personalizada']);
+            res.end(JSON.stringify({ id: result.insertId, expresion, descripcion }));
           }
           else if (path === '/api/register' && req.method === 'POST') {
             const { usuario, contrasena, nombre, correo, numero } = await getJsonBody(req);

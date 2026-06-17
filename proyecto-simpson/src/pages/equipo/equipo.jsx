@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { registrarVisita } from '../../services/db';
+import { TeamCard } from '../../components';
 import styles from './equipo.module.css';
 
 const integrantes = [
@@ -35,20 +36,13 @@ export const Equipo = () => {
 
       <div className="grid-2">
         {integrantes.map((integrante) => (
-          <div key={integrante.id} className={`card ${styles.equipoCard}`}>
-            {integrante.imagen ? (
-              <img src={integrante.imagen} alt={integrante.nombre} className={styles.avatar} />
-            ) : (
-              <div className={styles.avatarPlaceholder}></div>
-            )}
-            <h2>{integrante.nombre}</h2>
-            <p className={styles.rolText}>{integrante.rol}</p>
-            {integrante.descripcion && (
-              <p className={styles.descripcionText} style={{ marginTop: '1rem', fontSize: '0.9rem', color: 'var(--text-muted)' }}>
-                {integrante.descripcion}
-              </p>
-            )}
-          </div>
+          <TeamCard 
+            key={integrante.id}
+            nombre={integrante.nombre}
+            rol={integrante.rol}
+            imagen={integrante.imagen}
+            descripcion={integrante.descripcion}
+          />
         ))}
       </div>
     </div>

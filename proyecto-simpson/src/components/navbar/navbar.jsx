@@ -36,7 +36,7 @@ export const Navbar = () => {
       <ul className="navbar-links">
         <li><Link to="/" onClick={() => handleClick('Inicio')}>Inicio</Link></li>
         <li><Link to="/equipo" onClick={() => handleClick('Equipo')}>Equipo</Link></li>
-        <li><Link to="/bibliografia" onClick={() => handleClick('Bibliografia')}>Bibliografía</Link></li>
+        <li><Link to="/acerca" onClick={() => handleClick('Acerca')}>Acerca del Proyecto</Link></li>
         <li><Link to="/noticias" onClick={() => handleClick('Noticias')}>Noticias</Link></li>
         <li><Link to="/calculadora" onClick={() => handleClick('Calculadora')}>Calculadora</Link></li>
         <li><Link to="/contactos" onClick={() => handleClick('Contactos')}>Contactos</Link></li>

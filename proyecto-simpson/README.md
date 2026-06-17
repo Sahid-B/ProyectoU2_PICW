@@ -8,9 +8,10 @@ Este proyecto es una aplicación web interactiva desarrollada con **React** y **
 
 *   **Método Simpson 1/3:** Explicación e implementación teórica del método que aproxima el área bajo la curva mediante parábolas.
 *   **Diseño Premium UI/UX:** Interfaz elegante en modo oscuro con variables CSS personalizadas, tipografía moderna, íconos vectoriales (`lucide-react`), efectos de difuminado por vidrio (`backdrop-filter`) y microanimaciones interactivas.
+*   **Calculadora Universal:** Interfaz de texto libre donde puedes ingresar cualquier expresión matemática compatible con JavaScript (ej. `Math.sin(x)`, `x^2`, `1/(1+x^2)`) para integrarla dinámicamente sin depender de funciones preestablecidas.
 *   **Conexión a MySQL "Serverless":** A través de un middleware de Vite en `vite.config.js`, el frontend se conecta directamente a la base de datos MySQL sin necesidad de un backend tradicional como Express.
 *   **Sistema de Autenticación:** Inicio de sesión y registro de usuarios completamente funcionales, guardando datos directamente en la base de datos MySQL.
-*   **API en Tiempo Real:** Sección de noticias conectada directamente a la API oficial de **arXiv** para proveer los últimos papers y discusiones matemáticas académicas.
+*   **API en Tiempo Real:** Sección de noticias conectada directamente a la API oficial de **arXiv** (mediante un proxy CORS seguro) para proveer los últimos papers y discusiones matemáticas académicas.
 
 ---
 
@@ -28,14 +29,14 @@ proyecto-simpson/
     ├── App.jsx            # Enrutador principal de React
     ├── App.css            # Estilos base específicos
     ├── index.css          # Sistema de diseño global y variables
-    ├── components/        # Componentes reutilizables (Navbar, Footer, etc.)
+    ├── components/        # Componentes UI (Navbar, Footer, InputField, TeamCard, TechBadge)
     ├── pages/             # Páginas principales:
     │   ├── inicio/        # Dashboard principal
     │   ├── equipo/        # Información de los desarrolladores
-    │   ├── bibliografia/  # Recursos y referencias web estáticas
+    │   ├── acerca/        # Acerca del proyecto y tecnologías usadas
     │   ├── noticias/      # Consume API de arXiv (Papers Matemáticos)
-    │   ├── calculadora/   # Sistema de cálculo numérico Simpson 1/3
-    │   ├── contactos/     # Formulario de mensajería (Guardado en DB)
+    │   ├── calculadora/   # Sistema de cálculo numérico universal Simpson 1/3
+    │   ├── contactos/     # Formulario de mensajería modularizado (Guardado en DB)
     │   ├── estadisticas/  # Dashboard de la BD en tiempo real
     │   └── login/         # Sistema de autenticación de Usuarios
     └── services/          # Capa de servicios (Llamadas a /api/*)
@@ -60,8 +61,8 @@ El proyecto utiliza XAMPP/MySQL de forma local. Importa o corre el archivo `data
 | Ruta | Descripción |
 |---|---|
 | `/` | Panel principal: explicación del método, visitas y datos rápidos |
-| `/equipo` | Información y avatares del equipo de desarrollo |
-| `/bibliografia` | Lista de libros, documentación y artículos de referencia |
+| `/equipo` | Información y avatares del equipo de desarrollo usando `TeamCard` |
+| `/acerca` | Explicación del proyecto y listado de tecnologías con `TechBadge` |
 | `/noticias` | Feed de investigaciones y papers desde la API de arXiv |
 | `/calculadora` | Módulo matemático para resolver integrales por Simpson 1/3 |
 | `/contactos` | Formulario conectado a la BD |
@@ -79,7 +80,13 @@ Debes tener instalado **Node.js** y **XAMPP** (con MySQL corriendo).
 - Abre XAMPP y enciende **MySQL**.
 - Importa el archivo `database.sql` en phpMyAdmin o ejecuta el script directamente en la terminal de MySQL para crear `simpson_db` y las tablas necesarias.
 
-### 3. Instalar y Ejecutar
+### 3. Configurar Variables de Entorno
+Crea un archivo `.env` en la raíz del proyecto (al mismo nivel que `package.json`) y agrega la siguiente línea para que funcione la página de noticias:
+```env
+VITE_API_URL=http://export.arxiv.org/api/query?search_query=cat:math.NA&sortBy=submittedDate&sortOrder=descending&max_results=10
+```
+
+### 4. Instalar y Ejecutar
 ```bash
 # Clonar y entrar a la carpeta
 git clone https://github.com/Sahid-B/ProyectoU2_PICW.git
@@ -105,8 +112,8 @@ El servidor local se abrirá en `http://localhost:5173/`.
 - Lógica matemática del método Simpson 1/3 (`simpson.js`).
 - Páginas `/inicio`, `Navbar`, y diseño Glassmorphism general.
 
-**Jhonny** — Páginas informativas, APIs y testing
-- Integración de API externa de **arXiv** para papers de Matemáticas en `/noticias`.
-- Mejoras de UI/UX con `lucide-react` en todas las tarjetas y secciones.
-- Páginas `/equipo`, `/bibliografia`, `/contactos` y `/estadisticas`.
+**Jhonny** — Páginas informativas, refactorización y UI
+- Integración segura de API externa de **arXiv** mediante proxies CORS en `/noticias`.
+- Modularización de componentes UI (`TeamCard`, `InputField`, `TechBadge`).
+- Creación de la página `/acerca` y reestructuración de `/contactos` y `/estadisticas`.
 - Pruebas unitarias con **Vitest** en la lógica numérica.

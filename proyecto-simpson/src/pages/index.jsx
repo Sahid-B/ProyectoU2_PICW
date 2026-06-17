@@ -1,6 +1,6 @@
 export * from './inicio/inicio';
 export * from './equipo/equipo';
-export * from './bibliografia/bibliografia';
+export * from './acerca/acerca';
 export * from './noticias/noticias';
 export * from './calculadora/calculadora';
 export * from './contactos/contactos';

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { guardarContacto, registrarVisita } from '../../services/db';
 import { CheckCircle } from 'lucide-react';
+import { InputField } from '../../components';
 import styles from './contactos.module.css';
 
 export const Contactos = () => {
@@ -52,41 +53,35 @@ export const Contactos = () => {
       )}
 
       <form className={styles.formulario} onSubmit={handleSubmit}>
-        <div className={styles.campo}>
-          <label htmlFor="nombre">Nombre</label>
-          <input
-            id="nombre"
-            type="text"
-            placeholder="Tu nombre completo"
-            value={nombre}
-            onChange={(e) => setNombre(e.target.value)}
-            required
-          />
-        </div>
+        <InputField
+          id="nombre"
+          label="Nombre"
+          placeholder="Tu nombre completo"
+          value={nombre}
+          onChange={(e) => setNombre(e.target.value)}
+          required={true}
+        />
 
-        <div className={styles.campo}>
-          <label htmlFor="email">Email</label>
-          <input
-            id="email"
-            type="email"
-            placeholder="tu@correo.com"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            required
-          />
-        </div>
+        <InputField
+          id="email"
+          label="Email"
+          type="email"
+          placeholder="tu@correo.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          required={true}
+        />
 
-        <div className={styles.campo}>
-          <label htmlFor="mensaje">Mensaje</label>
-          <textarea
-            id="mensaje"
-            placeholder="Escribe tu mensaje aquí..."
-            value={mensaje}
-            onChange={(e) => setMensaje(e.target.value)}
-            rows={5}
-            required
-          />
-        </div>
+        <InputField
+          id="mensaje"
+          label="Mensaje"
+          type="textarea"
+          placeholder="Escribe tu mensaje aquí..."
+          value={mensaje}
+          onChange={(e) => setMensaje(e.target.value)}
+          rows={5}
+          required={true}
+        />
 
         <button type="submit" className={styles.boton}>
           Enviar Mensaje

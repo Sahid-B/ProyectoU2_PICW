@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { Navbar, Footer } from './components';
-import { Inicio, Equipo, Bibliografia, Noticias, Calculadora, Contactos, Estadisticas, Login } from './pages';
+import { Inicio, Equipo, Acerca, Noticias, Calculadora, Contactos, Estadisticas, Login } from './pages';
 import { registrarVisita } from './services/db';
 import './index.css';
 
@@ -14,7 +14,7 @@ const RouteTracker = () => {
     switch (location.pathname) {
       case '/': pagina = 'Inicio'; break;
       case '/equipo': pagina = 'Equipo'; break;
-      case '/bibliografia': pagina = 'Bibliografia'; break;
+      case '/acerca': pagina = 'Acerca'; break;
       case '/noticias': pagina = 'Noticias'; break;
       case '/calculadora': pagina = 'Calculadora'; break;
       case '/contactos': pagina = 'Contactos'; break;
@@ -39,7 +39,7 @@ function App() {
             <Route path="/" element={<Inicio />} />
             {/* Rutas futuras para Jhonny y Sahid Ronda 2 */}
             <Route path="/equipo" element={<Equipo />} />
-            <Route path="/bibliografia" element={<Bibliografia />} />
+            <Route path="/acerca" element={<Acerca />} />
             <Route path="/noticias" element={<Noticias />} />
             <Route path="/calculadora" element={<Calculadora />} />
             <Route path="/contactos" element={<Contactos />} />

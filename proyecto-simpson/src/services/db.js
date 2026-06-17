@@ -100,6 +100,21 @@ export const obtenerFunciones = async () => {
   }
 };
 
+export const guardarFuncion = async (expresion, descripcion = 'Función personalizada') => {
+  try {
+    const res = await fetch('/api/funciones', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ expresion, descripcion })
+    });
+    if (!res.ok) throw new Error('Error en API');
+    return await res.json();
+  } catch (error) {
+    console.error("Error al guardar función:", error);
+    throw error;
+  }
+};
+
 export const iniciarSesion = async (usuario, contrasena) => {
   try {
     const res = await fetch('/api/login', {

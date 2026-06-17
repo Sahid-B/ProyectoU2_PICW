@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { obtenerVisitas, obtenerCalculos, obtenerFunciones, registrarVisita } from '../../services/db';
+import { obtenerVisitas, obtenerCalculos, registrarVisita } from '../../services/db';
 import styles from './estadisticas.module.css';
 
 export const Estadisticas = () => {
   const [totalVisitas, setTotalVisitas] = useState(0);
   const [calculos, setCalculos] = useState([]);
-  const [funciones, setFunciones] = useState([]);
   const [promedio, setPromedio] = useState(null);
 
   useEffect(() => {
@@ -24,9 +23,6 @@ export const Estadisticas = () => {
       const suma = ultimosCalculos.reduce((acc, c) => acc + c.resultado, 0);
       setPromedio((suma / ultimosCalculos.length).toFixed(4));
     }
-
-    const funs = await obtenerFunciones();
-    setFunciones(funs);
   };
 
   return (
@@ -73,19 +69,6 @@ export const Estadisticas = () => {
             {promedio !== null ? promedio : '—'}
           </span>
           <span className={styles.statLabel}>promedio de los últimos 5 cálculos</span>
-        </div>
-      </div>
-
-      {/* Funciones disponibles */}
-      <div className={styles.seccion}>
-        <h2>Funciones Disponibles</h2>
-        <div className={styles.gridFunciones}>
-          {funciones.map((f) => (
-            <div key={f.id} className={styles.tarjetaFuncion}>
-              <code className={styles.expresion}>{f.expresion}</code>
-              <p className={styles.desc}>{f.descripcion}</p>
-            </div>
-          ))}
         </div>
       </div>
     </div>

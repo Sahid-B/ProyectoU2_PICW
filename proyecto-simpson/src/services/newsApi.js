@@ -4,17 +4,25 @@
 
 export const obtenerNoticiasMatematicas = async () => {
   try {
-    const res = await fetch('/api/noticias');
+    const apiUrl = import.meta.env.VITE_API_URL;
+    console.log("VITE_API_URL is:", apiUrl);
+    
+    // Cambiamos a corsproxy.io que suele manejar mejor los XML crudos sin envoltura JSON
+    const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(apiUrl)}`;
+    console.log("Fetching from:", proxyUrl);
+    
+    const res = await fetch(proxyUrl);
     if (!res.ok) {
-      throw new Error('Error al conectar con la API de noticias (arXiv)');
+      throw new Error(`Error HTTP: ${res.status}`);
     }
     const text = await res.text();
-    
+    console.log("Respuesta recibida, longitud:", text.length);
+
     // Parseamos el XML
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(text, "text/xml");
     const entries = xmlDoc.getElementsByTagName("entry");
-    
+
     const noticias = [];
     for (let i = 0; i < entries.length; i++) {
       const entry = entries[i];
@@ -23,7 +31,7 @@ export const obtenerNoticiasMatematicas = async () => {
       const id = entry.getElementsByTagName("id")[0]?.textContent || "";
       const author = entry.getElementsByTagName("author")[0]?.getElementsByTagName("name")[0]?.textContent || "Autor desconocido";
       const published = entry.getElementsByTagName("published")[0]?.textContent || "";
-      
+
       noticias.push({
         id: id,
         titulo: title.replace(/\n/g, ' ').trim(),
@@ -35,7 +43,7 @@ export const obtenerNoticiasMatematicas = async () => {
     }
     return noticias;
   } catch (error) {
-    console.error("Error obteniendo noticias:", error);
+    console.error("Error detallado obteniendo noticias:", error);
     return []; // Retornar vacío en caso de error para que la UI no se rompa
   }
 };
