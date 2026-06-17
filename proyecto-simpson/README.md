@@ -1,15 +1,16 @@
 # Proyecto Simpson 1/3 - Web App de Integración Numérica
 
-Este proyecto es una aplicación web interactiva desarrollada con **React** y **Vite** diseñada para calcular la integral definida de diversas funciones matemáticas aplicando el **Método Numérico de Simpson 1/3**. Cuenta con una interfaz moderna y fluida con estética oscura y efectos de Glassmorphism.
+Este proyecto es una aplicación web interactiva desarrollada con **React** y **Vite** diseñada para calcular la integral definida de diversas funciones matemáticas aplicando el **Método Numérico de Simpson 1/3**. Cuenta con una interfaz moderna y fluida con estética oscura, efectos de Glassmorphism, y conexión en tiempo real a una base de datos MySQL.
 
 ---
 
 ## 🚀 Características Principales
 
 *   **Método Simpson 1/3:** Explicación e implementación teórica del método que aproxima el área bajo la curva mediante parábolas.
-*   **Diseño Premium UI/UX:** Interfaz elegante en modo oscuro con variables CSS personalizadas, tipografía moderna (*Inter*), efectos de difuminado por vidrio (`backdrop-filter`) y microanimaciones interactivas.
-*   **Datos en Memoria (Mock):** Capa de servicios simulada en el cliente que registra visitas, cálculos y contactos sin necesidad de un servidor activo.
-*   **Diseño Responsivo:** Adaptado completamente para dispositivos móviles, tabletas y ordenadores de escritorio.
+*   **Diseño Premium UI/UX:** Interfaz elegante en modo oscuro con variables CSS personalizadas, tipografía moderna, íconos vectoriales (`lucide-react`), efectos de difuminado por vidrio (`backdrop-filter`) y microanimaciones interactivas.
+*   **Conexión a MySQL "Serverless":** A través de un middleware de Vite en `vite.config.js`, el frontend se conecta directamente a la base de datos MySQL sin necesidad de un backend tradicional como Express.
+*   **Sistema de Autenticación:** Inicio de sesión y registro de usuarios completamente funcionales, guardando datos directamente en la base de datos MySQL.
+*   **API en Tiempo Real:** Sección de noticias conectada directamente a la API oficial de **arXiv** para proveer los últimos papers y discusiones matemáticas académicas.
 
 ---
 
@@ -19,104 +20,93 @@ La arquitectura del proyecto está modularizada de la siguiente manera:
 
 ```text
 proyecto-simpson/
-├── database.sql           # Script SQL para la base de datos de MySQL (uso futuro)
+├── database.sql           # Script SQL para estructurar la BD en MySQL
 ├── index.html             # Plantilla HTML base
-├── vite.config.js         # Configuración del empaquetador Vite
+├── vite.config.js         # Configuración de Vite + MIDDLEWARE DE MYSQL
 ├── package.json           # Dependencias y scripts de ejecución
 └── src/
-    ├── main.jsx           # Punto de entrada de la aplicación React
-    ├── App.jsx            # Enrutador principal y rastreador de visitas
-    ├── App.css            # Estilos base específicos de la App
-    ├── index.css          # Sistema de diseño global (variables CSS y clases reutilizables)
-    ├── components/        # Componentes reutilizables de la aplicación
-    │   ├── index.jsx      # Exportador centralizado de componentes
-    │   ├── navbar/        # Barra de navegación interactiva y dinámica
-    │   └── footer/        # Pie de página dinámico con año actualizado
-    ├── pages/             # Páginas y secciones del sitio
-    │   ├── index.jsx      # Exportador centralizado de páginas
-    │   ├── inicio/        # Página principal con datos y estadísticas
-    │   ├── equipo/        # Información del equipo de desarrollo
-    │   ├── bibliografia/  # Referencias teóricas y páginas web consultadas
-    │   ├── noticias/      # Noticias y artículos sobre métodos numéricos
-    │   ├── calculadora/   # Módulo de cálculo Simpson 1/3
-    │   ├── contactos/     # Formulario de contacto con guardarContacto()
-    │   └── estadisticas/  # Panel de métricas: visitas, cálculos y funciones
-    └── services/          # Capa de servicios y acceso a datos
-        ├── db.js          # Datos mock en memoria (visitas, cálculos, contactos)
-        ├── newsApi.js     # Servicio mock de noticias matemáticas (datos locales)
-        ├── simpson.js     # Lógica pura del método numérico Simpson 1/3
-        └── simpson.test.js# Pruebas unitarias con Vitest (3 casos)
+    ├── App.jsx            # Enrutador principal de React
+    ├── App.css            # Estilos base específicos
+    ├── index.css          # Sistema de diseño global y variables
+    ├── components/        # Componentes reutilizables (Navbar, Footer, etc.)
+    ├── pages/             # Páginas principales:
+    │   ├── inicio/        # Dashboard principal
+    │   ├── equipo/        # Información de los desarrolladores
+    │   ├── bibliografia/  # Recursos y referencias web estáticas
+    │   ├── noticias/      # Consume API de arXiv (Papers Matemáticos)
+    │   ├── calculadora/   # Sistema de cálculo numérico Simpson 1/3
+    │   ├── contactos/     # Formulario de mensajería (Guardado en DB)
+    │   ├── estadisticas/  # Dashboard de la BD en tiempo real
+    │   └── login/         # Sistema de autenticación de Usuarios
+    └── services/          # Capa de servicios (Llamadas a /api/*)
 ```
 
 ---
 
 ## 🗄️ Esquema de Base de Datos (`simpson_db`)
 
-El proyecto incluye un archivo `database.sql` para levantar las siguientes tablas en MySQL (para uso futuro con un backend):
+El proyecto utiliza XAMPP/MySQL de forma local. Importa o corre el archivo `database.sql` para generar las tablas:
 
 1.  **`calculos`**: Almacena las integraciones ejecutadas por los usuarios.
-    *   `id` (PK, Auto), `funcion` (VARCHAR), `a` (DOUBLE), `b` (DOUBLE), `n` (INT), `resultado` (DOUBLE), `fecha` (DATETIME).
-2.  **`contactos`**: Registra los mensajes enviados por usuarios.
-    *   `id` (PK, Auto), `nombre` (VARCHAR), `email` (VARCHAR), `mensaje` (TEXT), `fecha` (DATETIME).
-3.  **`visitas`**: Rastreo de tráfico por sección de navegación.
-    *   `id` (PK, Auto), `pagina` (VARCHAR), `fecha` (DATETIME).
-4.  **`funciones`**: Lista de funciones predefinidas para el cálculo.
-    *   `id` (PK, Auto), `expresion` (VARCHAR), `descripcion` (VARCHAR).
+2.  **`contactos`**: Registra los mensajes enviados.
+3.  **`visitas`**: Rastreo de tráfico web por página.
+4.  **`funciones`**: Preajustes de funciones matemáticas usadas en la app.
+5.  **`usuarios`**: Registra las credenciales y datos de las personas que crean cuentas en la web.
 
 ---
 
 ## 🛠️ Rutas Disponibles
 
-El enrutador (`src/App.jsx`) utiliza `react-router-dom` para gestionar la navegación:
-
-| Ruta | Estado | Descripción |
-|---|---|---|
-| `/` | ✅ Activa | Panel principal: explicación del método, visitas y últimos datos de la BD |
-| `/equipo` | ✅ Activa | Información del equipo de desarrollo y roles |
-| `/bibliografia` | ✅ Activa | Lista de libros y páginas web consultadas |
-| `/noticias` | ✅ Activa | Artículos sobre métodos numéricos y desarrollo web |
-| `/calculadora` | ✅ Activa | Módulo interactivo de cálculo de Simpson 1/3 |
-| `/contactos` | ✅ Activa | Formulario para enviar mensajes con confirmación de éxito |
-| `/estadisticas` | ✅ Activa | Métricas de sesión: visitas, cálculos, promedio y funciones disponibles |
+| Ruta | Descripción |
+|---|---|
+| `/` | Panel principal: explicación del método, visitas y datos rápidos |
+| `/equipo` | Información y avatares del equipo de desarrollo |
+| `/bibliografia` | Lista de libros, documentación y artículos de referencia |
+| `/noticias` | Feed de investigaciones y papers desde la API de arXiv |
+| `/calculadora` | Módulo matemático para resolver integrales por Simpson 1/3 |
+| `/contactos` | Formulario conectado a la BD |
+| `/estadisticas` | Estadísticas globales extraídas de MySQL |
+| `/login` | Pasarela para iniciar sesión o registrarse |
 
 ---
 
-## 📋 Requisitos e Instalación
+## 📋 Instalación y Ejecución
 
-### 1. Clonar el repositorio
+### 1. Requisitos Previos
+Debes tener instalado **Node.js** y **XAMPP** (con MySQL corriendo).
+
+### 2. Configurar la Base de Datos
+- Abre XAMPP y enciende **MySQL**.
+- Importa el archivo `database.sql` en phpMyAdmin o ejecuta el script directamente en la terminal de MySQL para crear `simpson_db` y las tablas necesarias.
+
+### 3. Instalar y Ejecutar
 ```bash
+# Clonar y entrar a la carpeta
 git clone https://github.com/Sahid-B/ProyectoU2_PICW.git
 cd ProyectoU2_PICW/proyecto-simpson
-```
 
-### 2. Instalar dependencias de Node
-```bash
+# Instalar los paquetes (lucide-react, mysql2, etc.)
 npm install
-```
 
-### 3. Lanzar el Servidor en Desarrollo
-```bash
+# Lanzar el servidor en desarrollo
 npm run dev
 ```
 
-El servidor local se abrirá en `http://localhost:5173/` por defecto.
-
-> [!NOTE]
-> **Modo Mock activo:** El archivo `src/services/db.js` simula la base de datos directamente en el navegador con datos en memoria. No se requiere MySQL para ejecutar el proyecto en desarrollo. Cuando se implemente el backend (Node.js/Express), las funciones de `db.js` se reemplazarán por llamadas `fetch()` a la API REST.
+El servidor local se abrirá en `http://localhost:5173/`. 
+> **Nota:** El archivo `vite.config.js` contiene un proxy interno en `/api/*` que se comunica con tu XAMPP automáticamente usando la librería `mysql2`.
 
 ---
 
 ## 👥 Equipo de Desarrollo
 
-**Sahid** — Arquitectura base, lógica de cálculo y formulario interactivo
-- Configuración del proyecto (Vite + React + react-router-dom).
-- Base de datos MySQL (`database.sql`) y capa mock en memoria (`db.js`).
-- Página de Inicio, Navbar, Footer y sistema de registro de visitas.
-- Lógica matemática pura del método Simpson 1/3 (`simpson.js`).
-- Componente `SimpsonForm` y página `/calculadora`.
+**Sahid** — Arquitectura base, base de datos y calculadora
+- Conexión del proyecto con base de datos real a través de Vite Config Middleware.
+- Sistema de Auth (Login/Registro) interactivo y tabla `usuarios`.
+- Lógica matemática del método Simpson 1/3 (`simpson.js`).
+- Páginas `/inicio`, `Navbar`, y diseño Glassmorphism general.
 
-**Jhonny** — Páginas informativas, contacto, estadísticas y pruebas unitarias
-- Páginas `/equipo`, `/bibliografia` y `/noticias`.
-- Página `/contactos`: formulario con validación, llamada a `guardarContacto()` y mensaje de éxito.
-- Página `/estadisticas`: total de visitas, últimos cálculos, promedio de resultados y funciones disponibles.
-- Pruebas unitarias con **Vitest** para `simpson13` (caso correcto, n impar y n no numérico).
+**Jhonny** — Páginas informativas, APIs y testing
+- Integración de API externa de **arXiv** para papers de Matemáticas en `/noticias`.
+- Mejoras de UI/UX con `lucide-react` en todas las tarjetas y secciones.
+- Páginas `/equipo`, `/bibliografia`, `/contactos` y `/estadisticas`.
+- Pruebas unitarias con **Vitest** en la lógica numérica.

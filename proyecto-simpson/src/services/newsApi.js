@@ -1,49 +1,41 @@
 // ============================================================
-// Servicio de noticias — datos mock locales.
-// Sin llamadas a APIs externas.
+// Servicio de noticias — Integrado con arXiv API (Science & Math)
 // ============================================================
 
-const _noticias = [
-  {
-    id: 1,
-    titulo: 'La integración numérica y su importancia en la ingeniería moderna',
-    descripcion:
-      'Los métodos numéricos como Simpson 1/3 siguen siendo fundamentales para resolver problemas de ingeniería que no tienen solución analítica exacta.',
-    enlace: 'https://es.wikipedia.org/wiki/Integraci%C3%B3n_num%C3%A9rica',
-  },
-  {
-    id: 2,
-    titulo: 'Aplicaciones del cálculo numérico en la ciencia de datos',
-    descripcion:
-      'El cálculo numérico es la base de muchos algoritmos de machine learning y optimización usados en inteligencia artificial.',
-    enlace: 'https://es.wikipedia.org/wiki/M%C3%A9todos_num%C3%A9ricos',
-  },
-  {
-    id: 3,
-    titulo: 'Regla de Simpson: historia y origen matemático',
-    descripcion:
-      'Thomas Simpson publicó su famoso método en 1743. Hoy se usa en áreas como física, economía, medicina y computación.',
-    enlace: 'https://es.wikipedia.org/wiki/Regla_de_Simpson',
-  },
-  {
-    id: 4,
-    titulo: 'React y el futuro del desarrollo web en educación',
-    descripcion:
-      'React se ha convertido en una herramienta clave para crear aplicaciones educativas interactivas en universidades de todo el mundo.',
-    enlace: 'https://react.dev',
-  },
-  {
-    id: 5,
-    titulo: 'Cómo elegir el valor de n en el método de Simpson',
-    descripcion:
-      'El número de subintervalos n debe ser par. A mayor valor de n, mayor precisión en el resultado de la integral aproximada.',
-    enlace: 'https://es.wikipedia.org/wiki/Regla_de_Simpson',
-  },
-];
-
-/**
- * Devuelve la lista de noticias de matemáticas y métodos numéricos.
- */
-export const obtenerNoticiasMatematicas = () => {
-  return _noticias;
+export const obtenerNoticiasMatematicas = async () => {
+  try {
+    const res = await fetch('/api/noticias');
+    if (!res.ok) {
+      throw new Error('Error al conectar con la API de noticias (arXiv)');
+    }
+    const text = await res.text();
+    
+    // Parseamos el XML
+    const parser = new DOMParser();
+    const xmlDoc = parser.parseFromString(text, "text/xml");
+    const entries = xmlDoc.getElementsByTagName("entry");
+    
+    const noticias = [];
+    for (let i = 0; i < entries.length; i++) {
+      const entry = entries[i];
+      const title = entry.getElementsByTagName("title")[0]?.textContent || "Sin título";
+      const summary = entry.getElementsByTagName("summary")[0]?.textContent || "Sin descripción";
+      const id = entry.getElementsByTagName("id")[0]?.textContent || "";
+      const author = entry.getElementsByTagName("author")[0]?.getElementsByTagName("name")[0]?.textContent || "Autor desconocido";
+      const published = entry.getElementsByTagName("published")[0]?.textContent || "";
+      
+      noticias.push({
+        id: id,
+        titulo: title.replace(/\n/g, ' ').trim(),
+        descripcion: summary.replace(/\n/g, ' ').trim().substring(0, 200) + '...',
+        enlace: id, // El id de arxiv es la URL al abstract
+        autor: author,
+        fecha: new Date(published).toLocaleDateString()
+      });
+    }
+    return noticias;
+  } catch (error) {
+    console.error("Error obteniendo noticias:", error);
+    return []; // Retornar vacío en caso de error para que la UI no se rompa
+  }
 };

@@ -38,3 +38,12 @@ INSERT INTO funciones (expresion, descripcion) VALUES
 ('Math.sin(x)', 'Seno de x'),
 ('Math.cos(x)', 'Coseno de x'),
 ('Math.exp(x)', 'Exponencial de x');
+
+CREATE TABLE IF NOT EXISTS usuarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    usuario VARCHAR(255) NOT NULL UNIQUE,
+    contrasena VARCHAR(255) NOT NULL,
+    nombre VARCHAR(255) NOT NULL,
+    correo VARCHAR(255) NOT NULL,
+    numero VARCHAR(50) NOT NULL
+);

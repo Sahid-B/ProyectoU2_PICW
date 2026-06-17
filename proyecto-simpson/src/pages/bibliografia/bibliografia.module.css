@@ -1,24 +1,70 @@
 .biblioItem {
   transition: all 0.3s ease;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  border-left: 3px solid transparent;
+  padding: 1.25rem;
+  border-radius: 0.75rem;
+  border-left: 4px solid transparent;
+  background: rgba(255, 255, 255, 0.02);
+  margin-bottom: 1rem;
+  display: flex;
+  gap: 1rem;
+  align-items: flex-start;
+  border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
 .biblioItem:hover {
   background: rgba(255, 255, 255, 0.05);
   transform: translateX(5px);
-  border-left: 3px solid var(--accent);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.biblioItem.bookItem:hover {
+  border-left: 4px solid var(--primary);
+}
+
+.biblioItem.webItem:hover {
+  border-left: 4px solid var(--accent);
+}
+
+.itemIcon {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 0.75rem;
+  border-radius: 0.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.itemContent {
+  flex: 1;
+}
+
+.itemTitle {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: var(--text-main);
+  margin-bottom: 0.25rem;
+  display: block;
+}
+
+.itemDesc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  line-height: 1.4;
 }
 
 .biblioLink {
-  color: var(--primary);
+  color: var(--accent);
   text-decoration: none;
   font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 0.5rem;
   transition: color 0.3s ease;
 }
 
 .biblioLink:hover {
-  color: var(--accent);
+  color: #34D399;
   text-decoration: underline;
 }

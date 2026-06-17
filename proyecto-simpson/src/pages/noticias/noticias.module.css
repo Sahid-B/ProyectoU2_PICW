@@ -1,31 +1,95 @@
+.newsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 1.5rem;
+  margin-top: 2rem;
+}
+
 .newsCard {
-  border-left: 4px solid var(--primary);
   transition: all 0.3s ease;
+  padding: 1.5rem;
+  border-radius: 1rem;
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  overflow: hidden;
+}
+
+.newsCard::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: linear-gradient(90deg, var(--primary), var(--accent));
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
 
 .newsCard:hover {
   transform: translateY(-5px);
-  box-shadow: 0 10px 25px -5px rgba(79, 70, 229, 0.4);
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.newsCard:hover::before {
+  opacity: 1;
 }
 
 .newsTitle {
+  font-size: 1.15rem;
+  font-weight: 600;
   color: var(--text-main);
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.4;
+  flex: 1;
+}
+
+.newsDesc {
+  font-size: 0.9rem;
+  color: var(--text-muted);
+  margin-bottom: 1.5rem;
 }
 
 .newsLink {
-  display: inline-block;
-  margin-top: 1rem;
-  padding: 0.5rem 1rem;
-  background: rgba(79, 70, 229, 0.1);
-  color: var(--primary) !important;
-  border-radius: 0.5rem;
+  color: var(--accent);
   text-decoration: none;
-  font-weight: 600;
+  font-weight: 500;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
   transition: all 0.3s ease;
+  margin-top: auto;
 }
 
 .newsLink:hover {
-  background: var(--primary);
-  color: white !important;
+  color: #34D399;
+  gap: 0.75rem;
+}
+
+.loadingContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 4rem 2rem;
+  color: var(--text-muted);
+  gap: 1rem;
+}
+
+.spinner {
+  animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

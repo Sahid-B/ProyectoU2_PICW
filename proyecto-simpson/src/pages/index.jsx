@@ -1,7 +1,8 @@
-export { Inicio } from './inicio';
-export { Equipo } from './equipo';
-export { Bibliografia } from './bibliografia';
-export { Noticias } from './noticias';
-export { Calculadora } from './calculadora';
-export { Contactos } from './contactos';
-export { Estadisticas } from './estadisticas';
+export * from './inicio/inicio';
+export * from './equipo/equipo';
+export * from './bibliografia/bibliografia';
+export * from './noticias/noticias';
+export * from './calculadora/calculadora';
+export * from './contactos/contactos';
+export * from './estadisticas/estadisticas';
+export * from './login/login';

@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { guardarContacto, registrarVisita } from '../../services/db';
+import { CheckCircle } from 'lucide-react';
 import styles from './contactos.module.css';
 
 export const Contactos = () => {
@@ -38,7 +39,9 @@ export const Contactos = () => {
 
       {exito && (
         <div className={styles.exitoAlert}>
-          <p>✅ ¡Mensaje enviado correctamente! Gracias por contactarnos.</p>
+          <p style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
+            <CheckCircle size={20} color="var(--accent)" /> ¡Mensaje enviado correctamente! Gracias por contactarnos.
+          </p>
         </div>
       )}
 

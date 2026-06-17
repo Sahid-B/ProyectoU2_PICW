@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { Navbar, Footer } from './components';
-import { Inicio, Equipo, Bibliografia, Noticias, Calculadora, Contactos, Estadisticas } from './pages';
+import { Inicio, Equipo, Bibliografia, Noticias, Calculadora, Contactos, Estadisticas, Login } from './pages';
 import { registrarVisita } from './services/db';
 import './index.css';
 
@@ -44,6 +44,7 @@ function App() {
             <Route path="/calculadora" element={<Calculadora />} />
             <Route path="/contactos" element={<Contactos />} />
             <Route path="/estadisticas" element={<Estadisticas />} />
+            <Route path="/login" element={<Login />} />
           </Routes>
         </main>
         <Footer />
