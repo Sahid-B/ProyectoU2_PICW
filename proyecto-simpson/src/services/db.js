@@ -9,6 +9,12 @@ export const conectarBD = () => {
   return null; 
 };
 
+/**
+ * Registra una nueva visita a una página específica.
+ * Útil para mantener analíticas de uso dentro de la plataforma.
+ * @param {string} pagina - Nombre de la ruta o vista visitada.
+ * @returns {Object} Respuesta del servidor confirmando el registro.
+ */
 export const registrarVisita = async (pagina) => {
   try {
     const res = await fetch('/api/visitas', {
@@ -36,6 +42,15 @@ export const obtenerVisitas = async () => {
   }
 };
 
+/**
+ * Guarda un cálculo de Simpson 1/3 en el historial de la base de datos.
+ * Esto permite revisar resultados anteriores sin recalcularlos.
+ * @param {string} funcion - Expresión matemática evaluada.
+ * @param {number} a - Límite inferior.
+ * @param {number} b - Límite superior.
+ * @param {number} n - Número de segmentos (debe ser par).
+ * @param {number} resultado - Área aproximada calculada.
+ */
 export const guardarCalculo = async (funcion, a, b, n, resultado) => {
   try {
     const res = await fetch('/api/calculos', {
@@ -63,6 +78,12 @@ export const obtenerCalculos = async (limite) => {
   }
 };
 
+/**
+ * Almacena un mensaje enviado desde la vista de 'Contactos'.
+ * @param {string} nombre - Nombre del remitente.
+ * @param {string} email - Correo electrónico de contacto.
+ * @param {string} mensaje - Cuerpo del mensaje o duda.
+ */
 export const guardarContacto = async (nombre, email, mensaje) => {
   try {
     const res = await fetch('/api/contactos', {
@@ -115,6 +136,12 @@ export const guardarFuncion = async (expresion, descripcion = 'Función personal
   }
 };
 
+/**
+ * Autentica a un usuario existente en el sistema.
+ * @param {string} usuario - Nombre o alias del usuario.
+ * @param {string} contrasena - Contraseña en texto plano (el backend debe hashearla).
+ * @returns {Object} Datos del usuario si las credenciales son correctas.
+ */
 export const iniciarSesion = async (usuario, contrasena) => {
   try {
     const res = await fetch('/api/login', {

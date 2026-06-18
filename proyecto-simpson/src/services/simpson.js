@@ -3,7 +3,8 @@
  */
 
 export const simpson13 = (funcionStr, a, b, n) => {
-  // Validar que n sea par
+  // Validación estricta matemática: El método de Simpson 1/3 
+  // requiere obligatoriamente un número par de subintervalos.
   if (n % 2 !== 0) {
     throw new Error("El número de segmentos (n) debe ser un número par.");
   }
@@ -11,11 +12,13 @@ export const simpson13 = (funcionStr, a, b, n) => {
     throw new Error("El número de segmentos (n) debe ser mayor que 0.");
   }
 
-  // Preprocesar la función para convertir x^2 a x**2 de JS, y permitir uso de Math
+  // Preprocesamiento de la cadena: Reemplazamos el operador matemático '^'
+  // por '**' nativo de JavaScript para evitar errores de sintaxis en la evaluación.
   const expresionJS = funcionStr.replace(/\^/g, '**');
   
-  // Crear función evaluadora
-  // Se usa 'Math' directamente o las funciones dentro de Math si es necesario
+  // Compilamos la función en tiempo de ejecución. 
+  // Usamos 'with(Math)' para que el usuario pueda ingresar funciones como 'sin(x)' 
+  // en lugar de obligarlo a escribir 'Math.sin(x)'.
   const f = (x) => {
     try {
       // eslint-disable-next-line no-new-func
@@ -26,11 +29,14 @@ export const simpson13 = (funcionStr, a, b, n) => {
     }
   };
 
+  // Tamaño de cada subintervalo
   const h = (b - a) / n;
   
   let sumaImpares = 0;
   let sumaPares = 0;
 
+  // Bucle principal de sumatorias
+  // Acumulamos de forma separada los índices pares e impares para aplicar la fórmula
   for (let i = 1; i < n; i++) {
     const xi = a + i * h;
     if (i % 2 === 0) {
@@ -40,6 +46,7 @@ export const simpson13 = (funcionStr, a, b, n) => {
     }
   }
 
+  // Aplicamos la fórmula matemática de integración de Simpson 1/3
   const resultado = (h / 3) * (f(a) + 4 * sumaImpares + 2 * sumaPares + f(b));
   return resultado;
 };

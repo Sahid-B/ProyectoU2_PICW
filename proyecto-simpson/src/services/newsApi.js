@@ -2,12 +2,18 @@
 // Servicio de noticias — Integrado con arXiv API (Science & Math)
 // ============================================================
 
+/**
+ * Se conecta a la API de arXiv para obtener las últimas publicaciones científicas.
+ * Retorna un arreglo de objetos listos para ser renderizados por los componentes de React.
+ * @returns {Array} Lista de noticias o artículos científicos sobre matemáticas.
+ */
 export const obtenerNoticiasMatematicas = async () => {
   try {
     const apiUrl = import.meta.env.VITE_API_URL;
     console.log("VITE_API_URL is:", apiUrl);
     
-    // Cambiamos a corsproxy.io que suele manejar mejor los XML crudos sin envoltura JSON
+    // Usamos un proxy CORS (corsproxy.io) para evitar problemas de Same-Origin Policy (CORS)
+    // al intentar consumir la API externa directamente desde el navegador (cliente).
     const proxyUrl = `https://corsproxy.io/?${encodeURIComponent(apiUrl)}`;
     console.log("Fetching from:", proxyUrl);
     
@@ -18,9 +24,12 @@ export const obtenerNoticiasMatematicas = async () => {
     const text = await res.text();
     console.log("Respuesta recibida, longitud:", text.length);
 
-    // Parseamos el XML
+    // La API de arXiv responde con formato XML en lugar de JSON.
+    // Usamos DOMParser nativo del navegador para convertir el texto en un árbol DOM navegable.
     const parser = new DOMParser();
     const xmlDoc = parser.parseFromString(text, "text/xml");
+    
+    // Obtenemos todos los nodos <entry> que representan cada artículo devuelto
     const entries = xmlDoc.getElementsByTagName("entry");
 
     const noticias = [];
@@ -32,6 +41,7 @@ export const obtenerNoticiasMatematicas = async () => {
       const author = entry.getElementsByTagName("author")[0]?.getElementsByTagName("name")[0]?.textContent || "Autor desconocido";
       const published = entry.getElementsByTagName("published")[0]?.textContent || "";
 
+      // Mapeamos los datos en bruto del XML a una estructura de objeto limpia
       noticias.push({
         id: id,
         titulo: title.replace(/\n/g, ' ').trim(),
