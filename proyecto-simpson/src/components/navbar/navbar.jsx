@@ -31,7 +31,7 @@ export const Navbar = () => {
   return (
     <nav className="navbar">
       <div className="navbar-logo">
-        <Link to="/" onClick={() => handleClick('Inicio')}>Simpson 1/3</Link>
+        <Link to="/" onClick={() => handleClick('Inicio')}>IntegraWEB</Link>
       </div>
       <ul className="navbar-links">
         <li><Link to="/" onClick={() => handleClick('Inicio')}>Inicio</Link></li>
@@ -44,8 +44,8 @@ export const Navbar = () => {
         {user ? (
           <li style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
             <span style={{ color: 'var(--accent)', fontWeight: 'bold' }}>Hola, {user.nombre}</span>
-            <button 
-              onClick={handleLogout} 
+            <button
+              onClick={handleLogout}
               style={{ background: 'var(--primary)', color: 'white', border: 'none', padding: '5px 10px', borderRadius: '5px', cursor: 'pointer' }}
             >
               Salir
